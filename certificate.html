@@ -387,7 +387,7 @@
     
     <!-- Шапка ведомства -->
     <header class="header-card">
-      <img src="картинки_для_формы/Герб_Омской_области.png" alt="Герб Омской области" class="header-logo" onerror="this.style.display='none'">
+      <img id="headerLogo" alt="Герб Омской области" class="header-logo">
       <div class="header-text">
         <h1>Правительство Омской области</h1>
         <p>Министерство цифрового развития и связи Омской области</p>
@@ -398,7 +398,7 @@
     <main class="main-card">
       
       <div class="badge-success">
-        <span>✅</span> Тестирование успешно пройдено
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" style="vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>Тестирование успешно пройдено
       </div>
 
       <div class="title-wrap">
@@ -413,13 +413,13 @@
         </div>
 
         <button type="submit" id="generateBtn" class="btn-generate">
-          Сформировать сертификат 📜
+          Сформировать сертификат
         </button>
       </form>
 
       <!-- Блок с готовым сертификатом -->
       <section id="certOutputSection" class="cert-output-section">
-        <h3 class="cert-preview-title">Твой сертификат готов! 🎉</h3>
+        <h3 class="cert-preview-title">Твой сертификат готов!</h3>
         <p class="cert-preview-sub">Официальный сертификат Министерства цифрового развития и связи Омской области</p>
 
         <div class="canvas-wrapper">
@@ -441,7 +441,7 @@
 
       <!-- Памятка безопасности -->
       <div class="memo-card">
-        <h4>🛡️ Памятка кибербезопасности КиберГида:</h4>
+        <h4>Памятка кибербезопасности КиберГида:</h4>
         <ul class="memo-list">
           <li>• <strong>Никому не передавай карту:</strong> передача банковской карты другим лицам (дропперство) влечет строгую уголовную ответственность!</li>
           <li>• <strong>Код CVV и СМС-коды:</strong> нужны только для СПИСАНИЯ твоих денег, их нельзя сообщать никому, даже «поддержке».</li>
@@ -463,6 +463,17 @@
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('name')) {
       document.getElementById('studentName').value = urlParams.get('name');
+    }
+
+    
+    // Инициализация герба в шапке возле правительства
+    const headerLogoEl = document.getElementById('headerLogo');
+    if (headerLogoEl) {
+      if (window.GERB_BASE64) {
+        headerLogoEl.src = window.GERB_BASE64;
+      } else {
+        headerLogoEl.src = 'картинки_для_формы/Герб_Омской_области.png';
+      }
     }
 
     const certForm = document.getElementById('certForm');
