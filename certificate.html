@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Получение сертификата | КиберГид Минцифры Омской области</title>
+  <meta name="description" content="Официальный именной сертификат участника регионального тестирования по кибербезопасности Министерства цифрового развития Омской области.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f1f5f9;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --accent-blue: #0284c7;
+      --accent-navy: #0f172a;
+      --accent-gold: #b45309;
+      --accent-gold-light: #f59e0b;
+      --accent-green: #10b981;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Фоновые мягкие градиентные круги */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .bg-glow-1 {
+      top: -120px;
+      left: 10%;
+      background: radial-gradient(circle, #bae6fd 0%, transparent 70%);
+    }
+    .bg-glow-2 {
+      bottom: -120px;
+      right: 10%;
+      background: radial-gradient(circle, #fde68a 0%, transparent 70%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Шапка ведомства */
+    .header-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 26px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+    .header-logo {
+      width: 54px;
+      height: 64px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .header-text h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--accent-navy);
+      line-height: 1.3;
+    }
+    .header-text p {
+      font-size: 0.85rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Главная карточка */
+    .main-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 36px 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .badge-success {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #059669;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .title-wrap h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-navy);
+      margin-bottom: 8px;
+    }
+    .title-wrap p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 26px;
+      line-height: 1.5;
+    }
+
+    /* Форма ввода ФИО */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    label span.req {
+      color: #ef4444;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    input[type="text"]:focus {
+      background: #ffffff;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+    }
+    input[type="text"]::placeholder {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .btn-generate {
+      width: 100%;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.12rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.45);
+    }
+
+    /* Блок Сертификата (Canvas) */
+    .cert-output-section {
+      margin-top: 36px;
+      padding-top: 32px;
+      border-top: 1px solid #e2e8f0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    .cert-output-section.visible {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cert-preview-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-navy);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .cert-preview-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .canvas-wrapper {
+      width: 100%;
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn-download-pdf {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-download-pdf:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.45);
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    }
+
+    /* Памятка безопасности */
+    .memo-card {
+      margin-top: 36px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 22px 24px;
+    }
+    .memo-card h4 {
+      font-size: 1rem;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+    .memo-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .memo-list strong {
+      color: #0f172a;
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Режим печати / Сохранения в PDF через браузер */
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .bg-glow, .header-card, .title-wrap, #certForm, .cert-preview-title, .cert-preview-sub, .action-buttons, .memo-card, .footer, .badge-success {
+        display: none !important;
+      }
+      .main-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+      }
+      .cert-output-section {
+        display: flex !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100vh !important;
+      }
+      .canvas-wrapper {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      canvas {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: auto !important;
+        max-height: 100vh !important;
+        object-fit: contain !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="images_data.js"></script>
+</head>
+<body>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="container">
+    
+    <!-- Шапка ведомства -->
+    <header class="header-card">
+      <img src="картинки_для_формы/Герб_Омской_области.png" alt="Герб Омской области" class="header-logo" onerror="this.style.display='none'">
+      <div class="header-text">
+        <h1>Правительство Омской области</h1>
+        <p>Министерство цифрового развития и связи Омской области</p>
+      </div>
+    </header>
+
+    <!-- Основной блок -->
+    <main class="main-card">
+      
+      <div class="badge-success">
+        <span>✅</span> Тестирование успешно пройдено
+      </div>
+
+      <div class="title-wrap">
+        <h2>Получение именного сертификата</h2>
+      </div>
+
+      <!-- Форма ввода имени -->
+      <form id="certForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="studentName">Введите имя <span class="req">*</span></label>
+          <input type="text" id="studentName" required autocomplete="name" autofocus>
+        </div>
+
+        <button type="submit" id="generateBtn" class="btn-generate">
+          Сформировать сертификат 📜
+        </button>
+      </form>
+
+      <!-- Блок с готовым сертификатом -->
+      <section id="certOutputSection" class="cert-output-section">
+        <h3 class="cert-preview-title">Твой сертификат готов! 🎉</h3>
+        <p class="cert-preview-sub">Официальный сертификат Министерства цифрового развития и связи Омской области</p>
+
+        <div class="canvas-wrapper">
+          <canvas id="certificateCanvas" width="1200" height="800"></canvas>
+        </div>
+
+        <div class="action-buttons">
+          <button type="button" id="downloadPdfBtn" class="btn-download-pdf">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            Скачать в PDF
+          </button>
+        </div>
+      </section>
+
+      <!-- Памятка безопасности -->
+      <div class="memo-card">
+        <h4>🛡️ Памятка кибербезопасности КиберГида:</h4>
+        <ul class="memo-list">
+          <li>• <strong>Никому не передавай карту:</strong> передача банковской карты другим лицам (дропперство) влечет строгую уголовную ответственность!</li>
+          <li>• <strong>Код CVV и СМС-коды:</strong> нужны только для СПИСАНИЯ твоих денег, их нельзя сообщать никому, даже «поддержке».</li>
+          <li>• <strong>Двухфакторная защита (2FA):</strong> обязательно включи подтверждение входа по коду во ВКонтакте и Telegram.</li>
+          <li>• <strong>Единый детский телефон доверия:</strong> 8-800-2000-122 (бесплатно, анонимно, круглосуточно).</li>
+        </ul>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      Региональный проект по кибербезопасности «КиберГид» • Омская область, 2026 г.
+    </footer>
+
+  </div>
+
+  <script>
+    // Проверка параметров URL (если передано ?name=Иван)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('name')) {
+      document.getElementById('studentName').value = urlParams.get('name');
+    }
+
+    const certForm = document.getElementById('certForm');
+    const certOutputSection = document.getElementById('certOutputSection');
+    const canvas = document.getElementById('certificateCanvas');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+    let currentCertData = null;
+
+    // Предзагрузка изображений (используем Base64 для защиты от CORS-блокировок на Canvas)
+    const gerbImage = new Image();
+    gerbImage.src = (window.GERB_BASE64) ? window.GERB_BASE64 : 'картинки_для_формы/Герб_Омской_области.png';
+
+    const robotImage = new Image();
+    robotImage.src = (window.ROBOT_BASE64) ? window.ROBOT_BASE64 : 'картинки_для_формы/robot_cyberguide.png';
+
+    certForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('studentName').value.trim();
+
+      if (!name) {
+        alert('Пожалуйста, введите имя!');
+        return;
+      }
+
+      currentCertData = {
+        name: name,
+        date: new Date().toLocaleDateString('ru-RU')
+      };
+
+      drawCertificate(currentCertData);
+
+      certOutputSection.classList.add('visible');
+      certOutputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Отрисовка Сертификата на Canvas (1200 x 800 px)
+    function drawCertificate(data) {
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Чистый белый фон с легким градиентом
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(1, '#f8fafc');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Внутренний легкий защитный гильош/сетка
+      ctx.save();
+      ctx.strokeStyle = 'rgba(2, 132, 199, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 60; x < w - 60; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 60);
+        ctx.lineTo(x, h - 60);
+        ctx.stroke();
+      }
+      for (let y = 60; y < h - 60; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(60, y);
+        ctx.lineTo(w - 60, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Внешняя благородная золотая рамка
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 3.5;
+      ctx.strokeRect(26, 26, w - 52, h - 52);
+
+      // Внутренняя тонкая темно-графитовая рамка
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(36, 36, w - 72, h - 72);
+
+      // Самая тонкая серебряная линия
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(42, 42, w - 84, h - 84);
+
+      // Декоративные золотые угловые элементы
+      const corners = [
+        [36, 36], [w - 36, 36], [36, h - 36], [w - 36, h - 36]
+      ];
+      ctx.fillStyle = '#b45309';
+      corners.forEach(([cx, cy]) => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Герб Омской области по центру вверху
+      if (gerbImage.complete && gerbImage.naturalWidth > 0) {
+        ctx.drawImage(gerbImage, w / 2 - 34, 52, 68, 86);
+      }
+
+      // Шапка
+      ctx.textAlign = 'center';
+      
+      // «ПРАВИТЕЛЬСТВО ОМСКОЙ ОБЛАСТИ»
+      ctx.fillStyle = '#b45309';
+      ctx.font = '800 13.5px "Plus Jakarta Sans", sans-serif';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('ПРАВИТЕЛЬСТВО ОМСКОЙ ОБЛАСТИ', w / 2, 162);
+
+      // «МИНИСТЕРСТВО ЦИФРОВОГО РАЗВИТИЯ И СВЯЗИ ОМСКОЙ ОБЛАСТИ»
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '800 17px "Plus Jakarta Sans", sans-serif';
+      ctx.letterSpacing = '1px';
+      ctx.fillText('МИНИСТЕРСТВО ЦИФРОВОГО РАЗВИТИЯ И СВЯЗИ ОМСКОЙ ОБЛАСТИ', w / 2, 192);
+
+      // Тонкая разделительная золотая линия с ромбиком
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(w / 2 - 280, 214);
+      ctx.lineTo(w / 2 + 280, 214);
+      ctx.stroke();
+
+      ctx.fillStyle = '#b45309';
+      ctx.beginPath();
+      ctx.arc(w / 2, 214, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Главный заголовок «СЕРТИФИКАТ»
+      ctx.fillStyle = '#090d16';
+      ctx.font = '900 48px "Plus Jakarta Sans", sans-serif';
+      ctx.letterSpacing = '8px';
+      ctx.fillText('С Е Р Т И Ф И К А Т', w / 2, 280);
+
+      // Подзаголовок
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '800 14px "Plus Jakarta Sans", sans-serif';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('УЧАСТНИКА РЕГИОНАЛЬНОГО ПРОЕКТА «КИБЕРГИД»', w / 2, 316);
+
+      // Вводный текст
+      ctx.fillStyle = '#475569';
+      ctx.font = '500 18px Inter, sans-serif';
+      ctx.letterSpacing = '0px';
+      ctx.fillText('Настоящий сертификат подтверждает, что', w / 2, 372);
+
+      // ИМЯ УЧАСТНИКА (Крупные глубоко-чёрные буквы)
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '800 38px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText(data.name, w / 2, 430);
+
+      // Стильная линия подчеркивания имени
+      const nameWidth = Math.max(380, ctx.measureText(data.name).width + 80);
+      const startX = w / 2 - nameWidth / 2;
+      const endX = w / 2 + nameWidth / 2;
+
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(startX, 448);
+      ctx.lineTo(endX, 448);
+      ctx.stroke();
+
+      // Золотые точки на краях линии подчеркивания
+      ctx.fillStyle = '#b45309';
+      ctx.beginPath();
+      ctx.arc(startX, 448, 3.5, 0, Math.PI * 2);
+      ctx.arc(endX, 448, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Описание достижения (прошел(а) - только «а» в скобочках!)
+      ctx.fillStyle = '#1e293b';
+      ctx.font = '600 18px Inter, sans-serif';
+      ctx.fillText('успешно прошел(а) региональное интерактивное тестирование', w / 2, 505);
+      ctx.fillText('по цифровой грамотности и кибербезопасности в сети Интернет', w / 2, 536);
+
+      // РОБОТ КИБЕРГИД (СПРАВА ВНИЗУ)
+      if (robotImage.complete && robotImage.naturalWidth > 0) {
+        const robW = 220;
+        const robH = 220;
+        const robX = w - robW - 52;
+        const robY = h - robH - 46;
+        ctx.drawImage(robotImage, robX, robY, robW, robH);
+
+        // Маленькая стильная плашечка у робота
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText('КИБЕРГИД ОМСК', robX + robW / 2, robY + robH + 20);
+      }
+
+      // ДАТА ВЫДАЧИ И СТАТУС (ВНИЗУ ПО ЦЕНТРУ - БЕЗ РЕГИСТРАЦИОННОГО НОМЕРА И БЕЗ ПЕЧАТИ)
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '600 16px Inter, sans-serif';
+      ctx.fillText(`Дата выдачи: ${data.date}`, w / 2, 665);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '400 13px Inter, sans-serif';
+      ctx.fillText('Действителен на всей территории Российской Федерации', w / 2, 695);
+    }
+
+    // Генератор официального PDF из Canvas (автономный, чистый JS, не требует интернета и CDN)
+    function createPdfBlobFromCanvas(canvas) {
+      const imgDataUrl = canvas.toDataURL('image/jpeg', 0.96);
+      const base64Str = imgDataUrl.split(',')[1];
+      const binaryStr = atob(base64Str);
+      const len = binaryStr.length;
+      const imgBytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        imgBytes[i] = binaryStr.charCodeAt(i);
+      }
+
+      // Размеры альбомной страницы A4 в типографских пунктах (842 x 561 pt точно соответствует 1200 x 800 px)
+      const pageW = 842;
+      const pageH = 561;
+      const imgW = canvas.width;
+      const imgH = canvas.height;
+
+      const enc = (str) => new TextEncoder().encode(str);
+
+      const header = enc('%PDF-1.4\n');
+      const obj1 = enc('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+      const obj2 = enc('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+      const obj3 = enc(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Contents 4 0 R /Resources << /XObject << /Im1 5 0 R >> >> >>\nendobj\n`);
+      
+      const streamContent = `q\n${pageW} 0 0 ${pageH} 0 0 cm\n/Im1 Do\nQ\n`;
+      const streamBytes = enc(streamContent);
+      const obj4 = enc(`4 0 obj\n<< /Length ${streamBytes.length} >>\nstream\n${streamContent}endstream\nendobj\n`);
+
+      const obj5Header = enc(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${len} >>\nstream\n`);
+      const obj5Footer = enc('\nendstream\nendobj\n');
+
+      let offset = header.length;
+      const o1 = offset; offset += obj1.length;
+      const o2 = offset; offset += obj2.length;
+      const o3 = offset; offset += obj3.length;
+      const o4 = offset; offset += obj4.length;
+      const o5 = offset; offset += obj5Header.length + len + obj5Footer.length;
+
+      const xref = enc(
+        `xref\n0 6\n` +
+        `0000000000 65535 f \n` +
+        `${String(o1).padStart(10, '0')} 00000 n \n` +
+        `${String(o2).padStart(10, '0')} 00000 n \n` +
+        `${String(o3).padStart(10, '0')} 00000 n \n` +
+        `${String(o4).padStart(10, '0')} 00000 n \n` +
+        `${String(o5).padStart(10, '0')} 00000 n \n`
+      );
+
+      const trailer = enc(
+        `trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${offset}\n%%EOF\n`
+      );
+
+      return new Blob([header, obj1, obj2, obj3, obj4, obj5Header, imgBytes, obj5Footer, xref, trailer], {
+        type: 'application/pdf'
+      });
+    }
+
+    // Скачивание в PDF (мгновенное сохранение реального PDF-файла)
+    downloadPdfBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!currentCertData) {
+        alert('Сначала введите имя и нажмите «Сформировать сертификат»!');
+        return;
+      }
+      const safeName = (currentCertData.name || 'сертификат').replace(/\s+/g, '_');
+      const filename = `Сертификат_КиберГид_${safeName}.pdf`;
+
+      // 1. Попытка скачивания автономного PDF-файла напрямую в загрузки браузера
+      try {
+        const pdfBlob = createPdfBlobFromCanvas(canvas);
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+        return;
+      } catch (err) {
+        console.warn('Прямое скачивание PDF через Blob не сработало, открываем печать в PDF:', err);
+      }
+
+      // 2. Гарантированный надёжный резерв: встроенная печать страницы в PDF
+      window.print();
+    });
+  </script>
+</body>
+</html>
